@@ -9,6 +9,23 @@
       }
       .place {
         border: 1px black solid;
+        cursor: pointer;
+      }
+      .forecast {
+        border: 1px solid black;
+        margin: 20px;
+        float: left;
+        width: 180px;
+        height: 120px;
+      }
+      .forecast .location {
+        text-align: center;
+        font-size: 14pt;
+        height: 50pt;
+      }
+      .forecast .temp {
+        text-align: center;
+        font-size: 28pt;
       }
     </style>
   </head>
@@ -19,6 +36,9 @@
     <input type="text" id="place" />
     <button id="search">Søk!</button>
     <div id="place-list">
+
+    </div>
+    <div id="forecasts">
 
     </div>
   </body>

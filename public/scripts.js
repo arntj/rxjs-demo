@@ -23,3 +23,24 @@ searchStream.forEach(search => {
       webHelpers.addPlaces(res);
     });
 });
+
+const clickPlaceStream =
+  Rx.Observable.fromEvent(placeList, 'click')
+                .map(webHelpers.getPlaceIdFromElement);
+
+const getWeather = id =>
+  fetch(`/getWeather?id=${id}`)
+    .then(res => res.json());
+
+const weatherStreamFactory = id =>
+  Rx.Observable
+    .fromPromise(getWeather(id));
+
+clickPlaceStream
+  .flatMap(weatherStreamFactory)
+  .forEach(forecast => {
+    webHelpers.createForecast(forecast);
+  });
+
+const replayPlacesStream = new Rx.ReplaySubject();
+clickPlaceStream.subscribe(replayPlacesStream);
