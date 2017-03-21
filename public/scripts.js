@@ -8,6 +8,10 @@ const keyPressEventStream =
   Rx.Observable.fromEvent(document, 'keypress')
                 .filter(ev => ev.key === 'Enter');
 
-const clickSubscription = clickEventStream.subscribe(() => console.log('you clicked the button!'));
+const searchStream =
+  clickEventStream.merge(keyPressEventStream)
+                  .map(() => input.value)
+                  .filter(search => search && search.length > 2)
+                  .debounceTime(100);
 
-const keyPressSubscription = keyPressEventStream.subscribe(() => console.log('you clicked enter!'));
+searchStream.subscribe(console.log);
