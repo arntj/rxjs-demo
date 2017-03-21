@@ -14,4 +14,12 @@ const searchStream =
                   .filter(search => search && search.length > 2)
                   .debounceTime(100);
 
-searchStream.subscribe(console.log);
+const placeList = document.getElementById('place-list');
+
+searchStream.forEach(search => {
+  fetch('/searchPlaces?q='+search)
+    .then(res => res.json())
+    .then(res => {
+      webHelpers.addPlaces(res);
+    });
+});

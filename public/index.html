@@ -1,11 +1,25 @@
 <html>
   <head>
     <title>Været</title>
+    <style>
+      #place-list {
+        margin-top: 10px;
+        width: 500px;
+        display: table;
+      }
+      .place {
+        border: 1px black solid;
+      }
+    </style>
   </head>
   <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.1/Rx.js"></script>
+    <script src="webHelpers.js"></script>
     <script src="scripts.js" defer></script>
     <input type="text" id="place" />
     <button id="search">Søk!</button>
+    <div id="place-list">
+
+    </div>
   </body>
 </html>
