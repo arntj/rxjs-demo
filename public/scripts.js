@@ -1,3 +1,6 @@
+// this code example is partly based on the following article by Alex Sears
+// https://auth0.com/blog/understanding-reactive-programming-and-rxjs/
+
 const btn = document.getElementById('search');
 const input = document.getElementById('place');
 
@@ -44,3 +47,15 @@ clickPlaceStream
 
 const replayPlacesStream = new Rx.ReplaySubject();
 clickPlaceStream.subscribe(replayPlacesStream);
+
+const refreshTimer =
+  Rx.Observable.interval(5000)
+                .switchMap(() => replayPlacesStream)
+                .flatMap(weatherStreamFactory)
+                .forEach(forecast => {
+                  console.log(`${forecast.locationName}: ${forecast.temp} °C`);
+                  const temp =
+                    document.querySelector(`.forecast[placeid="${forecast.id}"] .temp`);
+                    
+                  temp.innerHTML = `${forecast.temp} &deg;C`
+                });
